@@ -51,12 +51,11 @@ async function deleteHandler(id){
 
 
  <div className="container ">
-    <div className="container">
-    <center><h1>Students</h1></center>
-    </div>
+
 <div className="container">
 <table className="table table-hover m-md-5">
-  <thead>
+<caption  ><h1>Students</h1></caption>
+  <thead >
     <tr>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
