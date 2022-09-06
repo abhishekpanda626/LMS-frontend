@@ -3,18 +3,25 @@ import React, { useState, useEffect } from 'react';
 //import './teacher.sass';
 export default function Manage(){
 const [data,setData]=useState([]);
-useEffect( ()=>{
-    fetch("http://127.0.0.1:8000/api/users")
-          .then((res) =>
-              res.json())
+function fetchuser()
+{
+  fetch("http://127.0.0.1:8000/api/users")
+  .then((res) =>
+      res.json())
 
-          .then((data) => {
-              //console.log(data);
-              setData(data);
-             // setPosts(data)
-          },)
+  .then((data) => {
+      //console.log(data);
+      setData(data);
+     // setPosts(data)
+  },)
+}
+useEffect( ()=>{
+   fetchuser();
 },[])
-console.log(data);
+async function deleteHandler(id){
+   await fetch("http://localhost:8000/api/users/delete/"+id,{method:'DELETE'});
+  fetchuser();
+  }
     return (
         <>
         {/* <div className="container">
@@ -51,7 +58,6 @@ console.log(data);
 <table className="table table-hover m-md-5">
   <thead>
     <tr>
-      <th scope="col">id</th>
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col" >Action</th>
@@ -60,11 +66,10 @@ console.log(data);
   {data&&data.map(user=>(
     <tbody key={user.id}>
     <tr>
-      <th scope="row">{user.id}</th>
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>
-        <button className='btn btn-danger'>Remove</button>
+        <button className='btn btn-danger' onClick={(e)=>deleteHandler(user.id)}>Remove</button>
       </td>
      
     </tr>

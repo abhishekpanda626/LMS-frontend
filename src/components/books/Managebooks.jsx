@@ -5,22 +5,31 @@ import { useNavigate } from 'react-router-dom';
 export default function Managebooks(){
 const [data,setData]=useState([]);
 const navigate=useNavigate();
-useEffect( ()=>{
+function fetchdata()
+{
     fetch("http://127.0.0.1:8000/api/books/display")
-          .then((res) =>
-              res.json())
+    .then((res) =>
+        res.json())
 
-          .then((data) => {
-              console.log(data);
+    .then((data) => {
+        console.log(data);
 
-              setData(data);
-             // setPosts(data)
-          },)
+        setData(data);
+       // setPosts(data)
+    },)
+}
+useEffect( ()=>{
+   fetchdata();
 },[])
-
+async function deleteHandler(e,id){
+e.preventDefault();
+ await fetch("http://localhost:8000/api/books/delete/"+id,{method:'DELETE'});
+fetchdata();
+}
 const addHandler=()=>{
     navigate('/books/add');
 }
+
  return (
         <>
         {/* <div className="container">
@@ -78,7 +87,7 @@ const addHandler=()=>{
       <td>{book.genre}</td>
       <td>{book.published_date}</td>
       <td> <button className="btn btn-info">Edit</button> </td>
-      <td> <button className="btn btn-danger">Delete</button> </td>
+      <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
      
     </tr>
     
