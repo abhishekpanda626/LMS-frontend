@@ -11,14 +11,15 @@ useEffect( ()=>{
               res.json())
 
           .then((data) => {
-              //console.log(data);
+              console.log(data);
+
               setData(data);
              // setPosts(data)
           },)
 },[])
 
 const addHandler=()=>{
-    navigate('books/add');
+    navigate('/books/add');
 }
  return (
         <>
@@ -57,7 +58,7 @@ const addHandler=()=>{
 <table className="table table-hover m-md-5">
   <thead>
     <tr>
-      <th scope="col">Book_id</th>
+      <th scope="col">Cover Page</th>
       <th scope="col">Title</th>
       <th scope="col">Author Name</th>
       <th scope="col" >Genre</th>
@@ -68,8 +69,11 @@ const addHandler=()=>{
   {data&&data.map(book=>(
     <tbody key={book.id}>
     <tr>
-      <th scope="row">{book.id}</th>
-      <td>{book.title}</td>
+      <th scope="row"  >
+        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80}/>
+        
+        </th>
+      <th>{book.title}</th>
       <td>{book.author}</td>
       <td>{book.genre}</td>
       <td>{book.published_date}</td>
