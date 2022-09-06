@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './teacher.css';
+//import './teacher.sass';
 export default function Manage(){
 const [data,setData]=useState([]);
 useEffect( ()=>{
@@ -40,10 +40,10 @@ console.log(data);
             </table>
         </div>
     </div>
-</div> */}
+</div>  */}
 
 
-<div className="container ">
+ <div className="container ">
     <div className="container">
     <center><h1>Students</h1></center>
     </div>
@@ -64,7 +64,7 @@ console.log(data);
       <td>{user.name}</td>
       <td>{user.email}</td>
       <td>
-        <button className='btn btn-danger'>Delete</button>
+        <button className='btn btn-danger'>Remove</button>
       </td>
      
     </tr>
@@ -77,7 +77,7 @@ console.log(data);
 </div>
 
 
-</div>
+</div> 
 
         </>
     )

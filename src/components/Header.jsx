@@ -32,13 +32,11 @@ export default function Header() {
                teacher ?
               <>
                  <Nav.Link href='/'>Home</Nav.Link>
-            <Nav.Link href='/books/show'>Books</Nav.Link>
-            <NavDropdown title="Manage" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#">Manage Books</NavDropdown.Item>
-              <NavDropdown.Item href="/manage/students">
+            <Nav.Link href='/books/manage'>Books</Nav.Link>
+              <Nav.Link href="/manage/students">
                 Manage Students
-              </NavDropdown.Item>
-            </NavDropdown>
+              </Nav.Link>
+            
               </>
               : null
             }

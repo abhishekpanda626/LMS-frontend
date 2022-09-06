@@ -1,6 +1,6 @@
 import Header from './components/Header';
 import { BrowserRouter as Router, Routes,Route } from 'react-router-dom';
-import Admin from './components/Admin';
+//import Admin from './components/Admin';
 import Tlogin from './components/teacher/Tlogin';
 import Slogin from './components/student/Slogin';
 import Showbooks from './components/books/Showbooks';
@@ -13,6 +13,8 @@ import Protected from './components/Protected';
 import Student from './components/Student';
 import Teacher from './components/Teacher';
 import Manage from './components/teacher/ManageStudent';
+import Managebooks from './components/books/Managebooks';
+import Addbooks from './components/books/Addbooks';
 function App() {
   return (
     <div className="App">
@@ -23,7 +25,8 @@ function App() {
 
       <Route element={<Teacher/>}>
       <Route path='/teacher/profile' element={<Tprofile/>} />
-      <Route path='/books/show' element={<Showbooks/>} />
+      <Route path='/books/manage' element={<Managebooks/>} />
+      <Route path='/books/add' element={<Addbooks/>} />
       <Route path='/manage/students' element={<Manage/>} />
       </Route>
 
