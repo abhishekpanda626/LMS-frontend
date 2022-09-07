@@ -67,13 +67,6 @@ navigate('/student/profile');
             Sign-in
           </button>
         </div>
-        <br />
-        <center><p >
-         Not a Member ? <a style={{textDecoration:'none'}} href="/student/signup">Signup</a>
-        </p>
-</center>
-        
-        
       </form>
             </div>
           </div>

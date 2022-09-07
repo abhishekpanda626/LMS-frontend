@@ -29,7 +29,10 @@ fetchdata();
 const addHandler=()=>{
     navigate('/books/add');
 }
-
+const editHandler=(id)=>{
+localStorage.setItem('bid',id);
+navigate('/books/update');
+}
  return (
         <>
         {/* <div className="container">
@@ -60,8 +63,13 @@ const addHandler=()=>{
 
 <div className="container ">
     <div className="container">
-    <center><h1>Books</h1>
-    </center>
+    <div className='container' >
+<span style={{marginTop:'60px',marginLeft:'400px',font:'60px bold sans-serif ',color:"yellowgreen"}}  >BOOKS</span>
+    <button className='btn btn-primary' onClick={(e)=>addHandler(e)}  style={{ marginTop:'30px',marginLeft:'900px'}}>
+      Add new book
+    </button>
+  </div>
+
     </div>
 <div className="container">
 <table className="table table-hover m-md-5">
@@ -86,7 +94,7 @@ const addHandler=()=>{
       <td>{book.author}</td>
       <td>{book.genre}</td>
       <td>{book.published_date}</td>
-      <td> <button className="btn btn-info">Edit</button> </td>
+      <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
       <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
      
     </tr>
@@ -95,7 +103,6 @@ const addHandler=()=>{
   ))}
   
 </table>
-<center><button className='btn btn-primary' onClick={(e)=>addHandler(e)} >Add new</button></center>
 </div>
 
 

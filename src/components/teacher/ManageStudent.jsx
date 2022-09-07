@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import './teacher.sass';
 export default function Manage(){
 const [data,setData]=useState([]);
+const navigate=useNavigate();
 function fetchuser()
 {
   fetch("http://127.0.0.1:8000/api/users")
@@ -22,6 +24,15 @@ async function deleteHandler(id){
    await fetch("http://localhost:8000/api/users/delete/"+id,{method:'DELETE'});
   fetchuser();
   }
+
+const updateHandler=(id)=>{
+  localStorage.setItem('sid',id);
+  navigate('update');
+}
+
+const addHandler=()=>{
+  navigate('/student/signup');
+}
     return (
         <>
         {/* <div className="container">
@@ -50,14 +61,20 @@ async function deleteHandler(id){
 </div>  */}
 
 
- <div className="container ">
 
 <div className="container">
+<div className='container' >
+<span style={{marginTop:'60px',marginLeft:'400px',font:'60px bold sans-serif ',color:"yellowgreen"}}  >STUDENTS</span>
+    <button className='btn btn-primary' onClick={(e)=>addHandler(e)}  style={{ marginTop:'30px',marginLeft:'900px'}}>
+      Add new 
+    </button>
+  </div>
 <table className="table table-hover m-md-5">
-<caption  ><h1>Students</h1></caption>
   <thead >
     <tr>
+      <th scope="col">Image</th>
       <th scope="col">Name</th>
+      <th scope="col">Contact No</th>
       <th scope="col">Email</th>
       <th scope="col" >Action</th>
     </tr>
@@ -65,9 +82,15 @@ async function deleteHandler(id){
   {data&&data.map(user=>(
     <tbody key={user.id}>
     <tr>
+    <th scope="row"  >
+        <img  src={`http://localhost:8000/${user.file_path}`} alt="image not found" width={80}/>
+      
+        </th>
       <td>{user.name}</td>
+      <td>{user.contact_no}</td>
       <td>{user.email}</td>
       <td>
+      <button className='btn btn-info' onClick={(e)=>updateHandler(user.id)}>Update</button> &emsp;
         <button className='btn btn-danger' onClick={(e)=>deleteHandler(user.id)}>Remove</button>
       </td>
      
@@ -79,9 +102,6 @@ async function deleteHandler(id){
 </table>
 
 </div>
-
-
-</div> 
 
         </>
     )
