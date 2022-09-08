@@ -1,15 +1,78 @@
-import Header from "../Header";
+import React, { useState, useEffect } from 'react';
+import Showbooks from '../books/Showbooks';
 
 export default function Profile()
 {
-    return(
-        <>
+    
+  
+  var user=JSON.parse(localStorage.getItem('student-info'));
+
+  const [data,setData]=useState(user);
+  console.log(data);
+    // function fetchuser()
+    // {
+    //   fetch("http://127.0.0.1:8000/api/users/get/")
+    //   .then((res) =>
+    //   {
+    //     res.json();
+    //     console.log(res.json())
+    //   }
         
-         <div>
-           
-            <h1> Student Profile page</h1>
+    //       )
+    
+    //   .then((data) => {
+    //     console.log(data);
+    //       setData(data);
+    //   },)
+    // }
+    // useEffect( ()=>{
+    //    fetchuser();
+    // },[])
+  
+
+    return(
+        <div className=" container-break-point ">
+        <div className="row">
+        <div className="col-9">
+          {<Showbooks/> }
+        </div> 
+      <div className="col-3 animated fadeIn " >
+      
+      <div className="container d-flex justify-content-center align-items-center">
+        <div className="card py-4 "  style={{marginTop:'200px',padding:'30px'}}>
+
+           <div className="d-flex   h-100 justify-content-center align-items-center">
+             <div className="round-image">
+               <img src={`http://localhost:8000/${data.file_path}`} className="rounded-circle" width="97"/>
+             </div>
+           </div>
+
+           <div className="text-center">
+
+             <h4 className="mt-3">{data.name}</h4>
+             <span>{data.email}</span>
+
+             <div className="px-5">
+               <p className="content">{data.contact_no}</p>
+
+               
+             </div>
+           </div>
+          
         </div>
-        </>
+         </div>
+
+             </div>
+              
+            </div>
+          </div>
+        
+        
+    
+        
+        
+     
+
         
     )
 }

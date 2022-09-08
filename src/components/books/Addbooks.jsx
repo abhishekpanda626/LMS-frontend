@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {  useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 export default function Addbooks()
 {
 const [title,setTitle]=useState('');
@@ -24,11 +24,22 @@ formdata.append('image',file);
 let result=await fetch("http://localhost:8000/api/books/add",{
     method:'POST',
   body:formdata});
-  navigate('/books/manage');
+  
+ 
+  if(result.status===200)
+  {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Student has been Updated',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate('/books/manage');
 }
 
 
-
+}
 
 
     return(

@@ -22,10 +22,13 @@ formdata.append('email',email);
 formdata.append('password',password);
 formdata.append('file_path',file);
 //formdata.append('image',file);
-console.log(formdata);
+//console.log(formdata);
 let result=await fetch("http://localhost:8000/api/register/user",{
     method:'POST',
-  body:formdata});
+  body:formdata}
+  )
+  let err=await result.json();
+  console.warn("error",err.validate_err);
   if(result.status===201)
   {
     Swal.fire({
@@ -37,13 +40,10 @@ let result=await fetch("http://localhost:8000/api/register/user",{
     })
     navigate('/manage/students');
   }
-  else {
-    console.warn(result.validate_err);
-    setError( {error_list: result.validate_err})
+  else
+  {
+    setError(err.validate_err)
   }
-
-//localStorage.setItem("student-info", JSON.stringify(result));
-
 }
     return(
       <>
@@ -55,7 +55,8 @@ let result=await fetch("http://localhost:8000/api/register/user",{
         <h3>Student Registration</h3>
         <div className="mb-3">
           <label>Name</label>
-          <span className="text-danger">{error.name}</span>
+          <span className="text-danger"><sup>*</sup></span>
+          <span className="text-danger m-2">{error.name}</span>
           <input
             type="text"
             className="form-control"
@@ -64,7 +65,7 @@ let result=await fetch("http://localhost:8000/api/register/user",{
           />
         </div>
         <label>Contact No</label>
-        <span className="text-danger">{error.contact_no}</span>
+        <span className="text-danger m-2">{error.contact_no}</span>
         <div className="input-group mb-3">
        
   <div className="input-group-prepend">
@@ -77,7 +78,7 @@ let result=await fetch("http://localhost:8000/api/register/user",{
 </div>
         <div className="mb-3">
           <label>Email address</label>
-          <span className="text-danger">{error.email}</span>
+          <span  className=" m-2 text-danger">{error.email}</span>
           <input
             type="email"
             className="form-control"
@@ -87,7 +88,7 @@ let result=await fetch("http://localhost:8000/api/register/user",{
         </div>
         <div className="mb-3">
           <label>Password</label>
-          <span className="text-danger">{error.password}</span>
+          <span className=" m-2 text-danger">{error.password}</span>
           <input
             type="password"
             className="form-control"

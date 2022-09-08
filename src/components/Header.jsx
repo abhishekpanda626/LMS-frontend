@@ -23,7 +23,7 @@ export default function Header() {
                student ?
               <>
                  <Nav.Link href='/'>Home</Nav.Link>
-            <Nav.Link href='/books/show'>Books</Nav.Link>
+
               </>
               : null
             }

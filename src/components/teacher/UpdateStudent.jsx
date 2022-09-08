@@ -12,6 +12,7 @@ export default function UpdateStudent()
   const[file,setFile]=useState('');
   const navigate=useNavigate();
   const [data,setData]=useState([]);
+  const [error,setError]=useState([]);
   var sid=localStorage.getItem('sid');
 
   function fetchuser()
@@ -23,6 +24,11 @@ export default function UpdateStudent()
     .then((data) => {
         setData(data);
         console.log(data);
+        setName(data.name);
+        setEmail(data.email);
+        setContact(data.contact_no);
+        setPassword(data.password);
+        setFile(data.file_path);
     },)
   }
   useEffect( ()=>{
@@ -47,11 +53,13 @@ console.log(formdata);
 let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PUT",{
     method:'POST',
   body:formdata});
-  console.log(result);
+  console.log(result)
+  let err=await result.json();
+  console.warn("error",err.validate_err);
   if(result.status===200)
   {
     Swal.fire({
-      position: 'center',
+      position: 'top-end',
       icon: 'success',
       title: 'Student has been Updated',
       showConfirmButton: false,
@@ -60,7 +68,8 @@ let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PU
     navigate('/manage/students');
   }
   else{
-
+    setError(err.validate_err);
+    console.warn(err.validate_err);
   }
 //localStorage.setItem("student-info", JSON.stringify(result));
 //navigate('/manage/students');
@@ -72,9 +81,10 @@ let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PU
             <div  className="col-md-4 border border-3 mx-auto p-2 bg-light border " >
                     <div className="container">
                     <form>
-        <h3>Student Registration</h3>
+
         <div className="mb-3">
           <label>Name</label>
+          <span className="text-danger m-2">{error.name}</span>
           <input
             type="text"
             required
@@ -85,6 +95,7 @@ let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PU
           />
         </div>
         <label>Contact No</label>
+        <span className="text-danger m-2">{error.contact_no}</span>
         <div className="input-group mb-3">
        
   <div className="input-group-prepend">
@@ -98,6 +109,7 @@ let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PU
 </div>
         <div className="mb-3">
           <label>Email address</label>
+          <span className="text-danger m-2">{error.email}</span>
           <input required
             type="email"
             className="form-control"

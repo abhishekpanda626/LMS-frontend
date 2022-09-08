@@ -54,8 +54,8 @@ const addHandler=()=>{
   </div>
 <table className="table table-hover m-md-5">
   <thead >
-    <tr>
-      <th scope="col">Image</th>
+    <tr >
+    
       <th scope="col">Name</th>
       <th scope="col">Contact No</th>
       <th scope="col">Email</th>
@@ -65,11 +65,10 @@ const addHandler=()=>{
   {data&&data.map(user=>(
     <tbody key={user.id}>
     <tr>
-    <th scope="row"  >
-        <img  src={`http://localhost:8000/${user.file_path}`} alt="image not found" width={80}/>
-      
-        </th>
-      <td>{user.name}</td>
+  
+    <th scope="col"><img  src={`http://localhost:8000/${user.file_path}`} className="rounded-circle" alt="image not found" width={80}/>
+    &emsp;  
+      {user.name}</th>
       <td>{user.contact_no}</td>
       <td>{user.email}</td>
       <td>
