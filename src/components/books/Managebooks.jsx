@@ -15,7 +15,7 @@ function fetchdata()
         console.log(data);
 
         setData(data);
-       // setPosts(data)
+      
     },)
 }
 useEffect( ()=>{

@@ -2,6 +2,7 @@ import "../index.css";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../Header";
+import Swal from "sweetalert2";
 export default function UpdateStudent()
 {
   const [email,setEmail]=useState('');
@@ -20,9 +21,8 @@ export default function UpdateStudent()
         res.json())
   
     .then((data) => {
-        //console.log(data);
         setData(data);
-       // setPosts(data)
+        console.log(data);
     },)
   }
   useEffect( ()=>{
@@ -41,15 +41,29 @@ formdata.append('name',name);
 formdata.append('contact_no',contact);
 formdata.append('email',email);
 formdata.append('password',password);
-//formdata.append('image',file);
+formdata.append('image',file);
 //formdata.append('image',file);
 console.log(formdata);
 let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PUT",{
     method:'POST',
   body:formdata});
-console.warn(result);
+  console.log(result);
+  if(result.status===200)
+  {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Student has been Updated',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate('/manage/students');
+  }
+  else{
+
+  }
 //localStorage.setItem("student-info", JSON.stringify(result));
-navigate('/manage/students');
+//navigate('/manage/students');
 }
     return(
       <>
@@ -63,6 +77,7 @@ navigate('/manage/students');
           <label>Name</label>
           <input
             type="text"
+            required
             className="form-control"
             placeholder="User name"
             defaultValue={data.name}
@@ -75,7 +90,7 @@ navigate('/manage/students');
   <div className="input-group-prepend">
     <span className="input-group-text" id="basic-addon1">+91</span>
   </div>
-  <input type="text" className="form-control" placeholder="contact no" aria-label="Contact" 
+  <input required type="text" className="form-control" placeholder="contact no" aria-label="Contact" 
   aria-describedby="basic-addon1"
   defaultValue={data.contact_no}
   onChange={(e)=>{setContact(e.target.value)}}
@@ -83,7 +98,7 @@ navigate('/manage/students');
 </div>
         <div className="mb-3">
           <label>Email address</label>
-          <input
+          <input required
             type="email"
             className="form-control"
             placeholder="Enter email"
@@ -93,7 +108,7 @@ navigate('/manage/students');
         </div>
         <div className="mb-3">
           <label>Password</label>
-          <input
+          <input required
             type="password"
             className="form-control"
             placeholder="Enter password"
@@ -102,7 +117,7 @@ navigate('/manage/students');
         </div>
         <div className="mb-3">
           <label>Upload Image</label>
-          <input className="form-control form-control-sm" id="formFileSm" type="file"
+          <input required className="form-control form-control-sm" id="formFileSm" type="file"
           onChange={(e)=>setFile(e.target.files[0])}
           />
         </div>

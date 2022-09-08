@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import './teacher.sass';
 export default function Manage(){
@@ -21,7 +22,15 @@ useEffect( ()=>{
    fetchuser();
 },[])
 async function deleteHandler(id){
-   await fetch("http://localhost:8000/api/users/delete/"+id,{method:'DELETE'});
+  
+ await fetch("http://localhost:8000/api/users/delete/"+id,{method:'DELETE'});
+ Swal.fire({
+  position: 'top-end',
+  icon: 'error',
+  title: 'Student is deleted',
+  showConfirmButton: false,
+  timer: 1500
+})
   fetchuser();
   }
 
@@ -34,33 +43,7 @@ const addHandler=()=>{
   navigate('/student/signup');
 }
     return (
-        <>
-        {/* <div className="container">
-    <div className="panel panel-default">
-      
-        <div className="panel-body">
-            <table className="table-latitude">
-                 <caption>Employee Information</caption>
-                  <thead>
-                      <th>Name</th>
-                      <th>Designation</th>
-                      <th>E-mail</th>
-                </thead>
-         
-                <tbody>
-
-                    <tr>
-                        <td>A</td>
-                        <td>B</td>
-                        <td>C</td>
-                        </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>  */}
-
-
+    <>
 
 <div className="container">
 <div className='container' >

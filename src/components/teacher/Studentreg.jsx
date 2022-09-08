@@ -2,6 +2,7 @@ import "../index.css";
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from "../Header";
+import Swal from "sweetalert2";
 export default function Studentreg()
 {
   const [email,setEmail]=useState('');
@@ -9,6 +10,7 @@ export default function Studentreg()
   const [contact,setContact]=useState('');
   const [password,setPassword]=useState('');
   const[file,setFile]=useState('');
+  const[error,setError]=useState([]);
   const navigate=useNavigate();
 async function signUpHandler(e)
 {
@@ -24,9 +26,24 @@ console.log(formdata);
 let result=await fetch("http://localhost:8000/api/register/user",{
     method:'POST',
   body:formdata});
-console.warn(result);
+  if(result.status===201)
+  {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Student has been Added',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate('/manage/students');
+  }
+  else {
+    console.warn(result.validate_err);
+    setError( {error_list: result.validate_err})
+  }
+
 //localStorage.setItem("student-info", JSON.stringify(result));
-//navigate('/manage/students');
+
 }
     return(
       <>
@@ -38,6 +55,7 @@ console.warn(result);
         <h3>Student Registration</h3>
         <div className="mb-3">
           <label>Name</label>
+          <span className="text-danger">{error.name}</span>
           <input
             type="text"
             className="form-control"
@@ -46,6 +64,7 @@ console.warn(result);
           />
         </div>
         <label>Contact No</label>
+        <span className="text-danger">{error.contact_no}</span>
         <div className="input-group mb-3">
        
   <div className="input-group-prepend">
@@ -58,6 +77,7 @@ console.warn(result);
 </div>
         <div className="mb-3">
           <label>Email address</label>
+          <span className="text-danger">{error.email}</span>
           <input
             type="email"
             className="form-control"
@@ -67,6 +87,7 @@ console.warn(result);
         </div>
         <div className="mb-3">
           <label>Password</label>
+          <span className="text-danger">{error.password}</span>
           <input
             type="password"
             className="form-control"
