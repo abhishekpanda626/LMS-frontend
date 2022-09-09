@@ -14,24 +14,48 @@ export default function Studentreg()
   const[emailerror,setEmailError]=useState('');
   const navigate=useNavigate();
   const[contacterr,setContacterr]=useState('');
+  const[fileerr,setFileerr]=useState('');
   function checkContact()
   {
-    let regcontact="\\A[0-9]{10}\\z";
-    if(!regcontact.test(contact)){
+    var RegExp = /^[0-9]{10}$/;
+  if(!contact)
+  {
+    setContacterr("The contact no field is required");
+  }
+  else if(!RegExp.test(contact)) {
+     // console.log("contact error",result);
       setContacterr("Invalid Contact no.");
+     
     }
+   
   }
   function checkMail()
   {
-    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if(!regEmail.test(email)){
+
+    let regEmail =/^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/;
+    if(!email)
+  {
+    setEmailError("The email field is required");
+  } 
+  else if(!regEmail.test(email)){
         setEmailError('Invalid Email address')
       }
+  }
+  function checkImage()
+  {
+    if(!file)
+    {
+      setFileerr("The image field is required")
+    }
+   else if ( !(/\.(jpe?g)$/i.test(file.name)) ) {
+      setFileerr("Invalid Image type!!Upload jpg and jpeg only");
+  }
   }
 
 async function signUpHandler(e)
 {
   e.preventDefault();
+
   const formdata= new FormData();
 formdata.append('name',name);
 formdata.append('contact_no',contact);
@@ -60,12 +84,18 @@ let result=await fetch("http://localhost:8000/api/register/user",{
   }
   else
   {
+    
     setError(err.validate_err);
     setEmailError(err.validate_err.email);
     setContacterr(err.validate_err.contact_no);
-    
+    setFileerr(err.validate_err.file_path);
+    checkImage();
+    checkContact();
+    checkMail();
   }
+  
 }
+
     return(
       <>
         <div className="container-fluid" >
@@ -86,7 +116,8 @@ let result=await fetch("http://localhost:8000/api/register/user",{
           />
         </div>
         <label>Contact No</label>
-        <span className="text-danger m-2">{contacterr}</span>
+        <span className="text-danger"><sup>*</sup></span>
+        <span className="text-danger m-2" id="contact"  >{contacterr}</span>
         <div className="input-group mb-3">
        
   <div className="input-group-prepend">
@@ -95,21 +126,24 @@ let result=await fetch("http://localhost:8000/api/register/user",{
   <input type="text" className="form-control" placeholder="contact no" aria-label="Contact" 
   aria-describedby="basic-addon1"
   onChange={(e)=>{setContact(e.target.value)}}
+  //onBlur={(e)=>{checkContact()}}
   />
 </div>
         <div className="mb-3">
           <label>Email address</label>
+          <span className="text-danger"><sup>*</sup></span>
           <span  className=" m-2 text-danger">{emailerror}</span>
           <input
             type="email"
             className="form-control"
             placeholder="Enter email"
-            onBlur={(e)=>checkMail(e.target.value)}
+            //onBlur={(e)=>checkMail(e.target.value)}
             onChange={(e)=>setEmail(e.target.value)}
           />
         </div>
         <div className="mb-3">
           <label>Password</label>
+          <span className="text-danger"><sup>*</sup></span>
           <span className=" m-2 text-danger">{error.password}</span>
           <input
             type="password"
@@ -120,8 +154,11 @@ let result=await fetch("http://localhost:8000/api/register/user",{
         </div>
         <div className="mb-3">
           <label>Upload Image</label>
+          <span className="text-danger"><sup>*</sup></span>
+          <span className=" m-2 text-danger">{fileerr}</span>
           <input className="form-control form-control-sm" id="formFileSm" type="file"
           onChange={(e)=>setFile(e.target.files[0])}
+         // onBlur={(e)=>checkImage()}
           />
         </div>
        

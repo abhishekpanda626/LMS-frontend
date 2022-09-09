@@ -15,16 +15,23 @@ export default function Teacherreg()
   const[fileerr,setFileerr]=useState('');
   function checkMail()
   {
-    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      if(!regEmail.test(email)){
+    let regEmail =/^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/;
+    if(!email)
+    {
+      setEmailError("The email field is required")
+    } 
+   else  if(!regEmail.test(email)){
         setEmailError('Invalid Email address')
       }
   }
   function checkImage()
   {
-    console.log(file);
-    if ( !(/\.(jpe?g)$/i.test(file.name)) ) {
-      setFileerr("Invalid Image type!!UPLOAD jpg and jpeg only");
+   if(!file)
+   {
+    setFileerr("The image field is required");
+   }
+    else if ( !(/\.(jpe?g)$/i.test(file.name)) ) {
+      setFileerr("Invalid Image type!!upload jpg and jpeg only");
   }
   }
 async function signUpHandler(e)
@@ -43,7 +50,7 @@ let result=await fetch("http://localhost:8000/api/register/admin",{
   body:formdata}
   )
   let err=await result.json();
-  console.warn("error",err.validate_err);
+ // console.warn("error",err.validate_err);
   if(result.status===201)
   {
     localStorage.setItem('teacher-info',JSON.stringify(err));
@@ -55,6 +62,8 @@ let result=await fetch("http://localhost:8000/api/register/admin",{
     setError(err.validate_err);
     setEmailError(err.validate_err.email);
     setFileerr(err.validate_err.file_path);
+    checkImage();
+    checkMail();
     
   }
 }
@@ -106,7 +115,7 @@ let result=await fetch("http://localhost:8000/api/register/admin",{
           <span className=" m-2 text-danger">{fileerr}</span>
           <input className="form-control form-control-sm" id="formFileSm" type="file"
           onChange={(e)=>setFile(e.target.files[0])}
-          onBlur={(e)=>checkImage()}
+          
           />
         </div>
        

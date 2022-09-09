@@ -15,13 +15,17 @@ export default function Login()
 
 
 
-function checkMail()
-{
-  let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(!regEmail.test(email)){
-      setEmailError('Invalid Email address')
-    }
-}
+   function checkMail()
+   {
+     let regEmail =/^[a-zA-Z0-9._]+@[a-zA-Z0-9._]+\.[a-zA-Z]{2,4}$/;
+     if(!email)
+     {
+       setEmailError("The email field is required");
+     }
+     else  if(!regEmail.test(email)){
+         setEmailError('Invalid Email address')
+       }
+   }
 
 
 async function signInHandler(e)

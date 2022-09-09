@@ -10,8 +10,19 @@ const [pdate,setPdate]=useState('');
 const [file,setFile]=useState([]);
 const navigate=useNavigate();
 const [error,setError]=useState([]);
+const[fileerr,setFileerr]=useState('');
 //let data={title,author,genre,pdate,file};
-
+function checkImage()
+  {
+    if(!file.name)
+    {
+      setFileerr("The image field is required")
+      
+    }
+   else if ( !(/\.(jpe?g)$/i.test(file.name)) ) {
+      setFileerr("Invalid Image type!!Upload jpg and jpeg only");
+  }
+  }
 async function addHandler(e){
 e.preventDefault();
 //console.warn(data);
@@ -42,6 +53,8 @@ let result=await fetch("http://localhost:8000/api/books/add",{
 }
 else{
   setError(err.validate_err);
+  setFileerr(err.validate_err.file_path);
+  checkImage();
 }
 
 
@@ -132,11 +145,11 @@ else{
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-              <span className="mb-0 h6">Upload Cover Page</span>
+              <span className="mb-0 h6">Upload Cover Page</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-              <span className="text-danger m-2">{error.file_path}</span>
+              <span className="text-danger m-2">{fileerr}</span>
                 <input className="form-control form-control-lg" id="formFileLg" type="file" 
                 onChange={(e)=>setFile(e.target.files[0])}
                 />
