@@ -66,8 +66,8 @@ const addHandler=()=>{
     <tbody key={user.id}>
     <tr>
   
-    <th scope="col"><img  src={`http://localhost:8000/${user.file_path}`} className="rounded-circle" alt="image not found" width={80}/>
-    &emsp;  
+    <th scope="col"><img  src={`http://localhost:8000/${user.file_path}`} className="rounded-circle" alt="image not found" height={50} width={70}/>
+        &emsp;  
       {user.name}</th>
       <td>{user.contact_no}</td>
       <td>{user.email}</td>

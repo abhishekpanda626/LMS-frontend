@@ -11,7 +11,24 @@ export default function Studentreg()
   const [password,setPassword]=useState('');
   const[file,setFile]=useState('');
   const[error,setError]=useState([]);
+  const[emailerror,setEmailError]=useState('');
   const navigate=useNavigate();
+  const[contacterr,setContacterr]=useState('');
+  function checkContact()
+  {
+    let regcontact="\\A[0-9]{10}\\z";
+    if(!regcontact.test(contact)){
+      setContacterr("Invalid Contact no.");
+    }
+  }
+  function checkMail()
+  {
+    let regEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      if(!regEmail.test(email)){
+        setEmailError('Invalid Email address')
+      }
+  }
+
 async function signUpHandler(e)
 {
   e.preventDefault();
@@ -38,11 +55,15 @@ let result=await fetch("http://localhost:8000/api/register/user",{
       showConfirmButton: false,
       timer: 1500
     })
+    localStorage.setItem('student-info',JSON.stringify(err));
     navigate('/manage/students');
   }
   else
   {
-    setError(err.validate_err)
+    setError(err.validate_err);
+    setEmailError(err.validate_err.email);
+    setContacterr(err.validate_err.contact_no);
+    
   }
 }
     return(
@@ -65,7 +86,7 @@ let result=await fetch("http://localhost:8000/api/register/user",{
           />
         </div>
         <label>Contact No</label>
-        <span className="text-danger m-2">{error.contact_no}</span>
+        <span className="text-danger m-2">{contacterr}</span>
         <div className="input-group mb-3">
        
   <div className="input-group-prepend">
@@ -78,11 +99,12 @@ let result=await fetch("http://localhost:8000/api/register/user",{
 </div>
         <div className="mb-3">
           <label>Email address</label>
-          <span  className=" m-2 text-danger">{error.email}</span>
+          <span  className=" m-2 text-danger">{emailerror}</span>
           <input
             type="email"
             className="form-control"
             placeholder="Enter email"
+            onBlur={(e)=>checkMail(e.target.value)}
             onChange={(e)=>setEmail(e.target.value)}
           />
         </div>

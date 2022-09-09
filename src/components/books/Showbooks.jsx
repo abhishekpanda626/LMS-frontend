@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 //import './teacher.css';
 export default function Showbooks(){
 const [data,setData]=useState([]);
+const [query,setQuery]=useState('');
+console.warn(query);
 useEffect( ()=>{
     fetch("http://127.0.0.1:8000/api/books/display")
           .then((res) =>
@@ -13,39 +15,14 @@ useEffect( ()=>{
             
           },)
 },[])
-console.log(data);
+
     return (
         <>
-        {/* <div className="container">
-    <div className="panel panel-default">
-      
-        <div className="panel-body">
-            <table className="table-latitude">
-                 <caption>Employee Information</caption>
-                  <thead>
-                      <th>Name</th>
-                      <th>Designation</th>
-                      <th>E-mail</th>
-                </thead>
-         
-                <tbody>
-
-                    <tr>
-                        <td>A</td>
-                        <td>B</td>
-                        <td>C</td>
-                        </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> */}
-
-
 <div className="container ">
     <div className="container">
     <center><h1>Books</h1></center>
-    </div>
+<div style={{marginLeft:'390px',marginTop:'30px'}}><input  type="text" placeholder="search.." name="search" id="search" onChange={(e)=>{setQuery(e.target.value)}}/>
+ </div>   </div>
 <div className="container">
 <table className="table table-hover m-md-5">
   <thead>
@@ -57,11 +34,11 @@ console.log(data);
       <th scope="col" >Published Date</th>
     </tr>
   </thead>
-  {data&&data.map(book=>(
+  {data.filter(res=>res.title.toLowerCase().includes(query)).data&&data.map(book=>(
     <tbody key={book.id}>
     <tr>
     <th scope="row"  >
-        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80}/>
+        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" height={80} width={80}/>
         
         </th>
       <td>{book.title}</td>

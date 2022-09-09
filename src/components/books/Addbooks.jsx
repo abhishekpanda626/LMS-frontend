@@ -9,6 +9,7 @@ const [genre,setGenre]=useState('');
 const [pdate,setPdate]=useState('');
 const [file,setFile]=useState([]);
 const navigate=useNavigate();
+const [error,setError]=useState([]);
 //let data={title,author,genre,pdate,file};
 
 async function addHandler(e){
@@ -24,18 +25,23 @@ formdata.append('image',file);
 let result=await fetch("http://localhost:8000/api/books/add",{
     method:'POST',
   body:formdata});
+  let err= await result.json();
+  
   
  
-  if(result.status===200)
+  if(result.status===201)
   {
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'Student has been Updated',
+      title: 'New book added!!! ',
       showConfirmButton: false,
       timer: 1500
     })
     navigate('/books/manage');
+}
+else{
+  setError(err.validate_err);
 }
 
 
@@ -57,12 +63,11 @@ let result=await fetch("http://localhost:8000/api/books/add",{
 
             <div className="row align-items-center pt-3 pb-1">
               <div className="col-md-3 ps-5">
-
-                <h6 className="mb-0">Title</h6>
-
+                <span className="mb-0 h6">Title</span><span className="text-danger"><sup>*</sup></span>
+             
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.title}</span>
                 <input 
                 type="text"
                  placeholder="book title"
@@ -78,11 +83,11 @@ let result=await fetch("http://localhost:8000/api/books/add",{
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Author</h6>
+              <span className="mb-0 h6">Author</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.author}</span>
                 <input type="text" className="form-control form-control-lg" placeholder="author name"
                 onChange={(e)=>setAuthor(e.target.value)}
                 
@@ -95,11 +100,11 @@ let result=await fetch("http://localhost:8000/api/books/add",{
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Genre</h6>
+              <span className="mb-0 h6">Genre</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.author}</span>
               <input type="text" className="form-control form-control-lg" placeholder="Genre of the book"
               onChange={(e)=>setGenre(e.target.value)}
               />
@@ -107,16 +112,14 @@ let result=await fetch("http://localhost:8000/api/books/add",{
               </div>
             </div>
             <hr className="mx-n3"/>
-
-
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Published date:</h6>
+              <span className="mb-0 h6">Date of Publication</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.published_date}</span>
               <input type="date" className="form-control form-control-lg" placeholder="Date of publish" 
               onChange={(e)=>setPdate(e.target.value)}
               />
@@ -129,16 +132,15 @@ let result=await fetch("http://localhost:8000/api/books/add",{
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-1">Upload Cover page</h6>
+              <span className="mb-0 h6">Upload Cover Page</span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.file_path}</span>
                 <input className="form-control form-control-lg" id="formFileLg" type="file" 
                 onChange={(e)=>setFile(e.target.files[0])}
                 />
-                <div className="small text-muted mt-2">Upload  cover page of the book in jpg/png/jpeg format. Max file
-                  size 50 MB</div>
+                <div className="small text-muted mt-2">Upload  cover page of the book in jpg/jpeg format.</div>
 
               </div>
             </div>

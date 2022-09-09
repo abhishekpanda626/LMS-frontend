@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Managebooks(){
 const [data,setData]=useState([]);
 const navigate=useNavigate();
+const[ query, setQuery]=useState('');
 function fetchdata()
 {
     fetch("http://127.0.0.1:8000/api/books/display")
@@ -35,36 +36,13 @@ navigate('/books/update');
 }
  return (
         <>
-        {/* <div className="container">
-    <div className="panel panel-default">
-      
-        <div className="panel-body">
-            <table className="table-latitude">
-                 <caption>Employee Information</caption>
-                  <thead>
-                      <th>Name</th>
-                      <th>Designation</th>
-                      <th>E-mail</th>
-                </thead>
-         
-                <tbody>
-
-                    <tr>
-                        <td>A</td>
-                        <td>B</td>
-                        <td>C</td>
-                        </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> */}
-
-
 <div className="container ">
     <div className="container">
     <div className='container' >
+   
 <span style={{marginTop:'60px',marginLeft:'400px',font:'60px bold sans-serif ',color:"yellowgreen"}}  >BOOKS</span>
+<div style={{marginLeft:'390px',marginTop:'30px'}}><input  type="text" placeholder="search.." name="search" id="search" onChange={(e)=>{setQuery(e.target.value)}}/>
+ </div>
     <button className='btn btn-primary' onClick={(e)=>addHandler(e)}  style={{ marginTop:'30px',marginLeft:'900px'}}>
       Add new book
     </button>
@@ -87,7 +65,7 @@ navigate('/books/update');
     <tbody key={book.id}>
     <tr>
       <th scope="row"  >
-        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80}/>
+        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80} height={80}/>
         
         </th>
       <th>{book.title}</th>

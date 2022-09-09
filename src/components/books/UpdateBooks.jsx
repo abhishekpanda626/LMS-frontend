@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 export default function UpdateBooks()
 {
     var id=localStorage.getItem('bid');
@@ -8,7 +9,8 @@ export default function UpdateBooks()
 const [author,setAuthor]=useState('');
 const [genre,setGenre]=useState('');
 const [pdate,setPdate]=useState('');
-const [file,setFile]=useState([]);
+const [file,setFile]=useState('');
+const[error,setError]=useState([]);
 const navigate=useNavigate();
 //let data={title,author,genre,pdate,file};
 function fetchdata()
@@ -45,7 +47,23 @@ console.log(formdata);
 let result=await fetch("http://localhost:8000/api/books/update/"+bid+"?_method=PUT",{
     method:'POST',
   body:formdata});
-navigate('/books/manage');
+  let err= await result.json();
+  if(result.status===200)
+  {
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'New book added!!! ',
+      showConfirmButton: false,
+      timer: 1500
+    })
+    navigate('/books/manage');
+}
+else{
+  setError(err.validate_err);
+}
+
+
 }
 
 
@@ -69,11 +87,11 @@ navigate('/books/manage');
             <div className="row align-items-center pt-3 pb-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Title</h6>
+              <span className="mb-0 h6">Title</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.title}</span>
                 <input 
                 type="text"
                  placeholder="book title"
@@ -90,11 +108,11 @@ navigate('/books/manage');
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Author</h6>
+              <span className="mb-0 h6">Author</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.author}</span>
                 <input type="text" className="form-control form-control-lg" placeholder="author name"
                 defaultValue={data.author}
                 onChange={(e)=>setAuthor(e.target.value)}
@@ -108,11 +126,11 @@ navigate('/books/manage');
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Genre</h6>
+              <span className="mb-0 h6">Genre</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.author}</span>
               <input type="text" className="form-control form-control-lg" placeholder="Genre of the book"
               defaultValue={data.genre}
               onChange={(e)=>setGenre(e.target.value)}
@@ -123,11 +141,11 @@ navigate('/books/manage');
             <div className="row align-items-center py-1">
               <div className="col-md-3 ps-5">
 
-                <h6 className="mb-0">Published date:</h6>
+              <span className="mb-0 h6">Date of Publication</span><span className="text-danger"><sup>*</sup></span>
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.published_date}</span>
               <input type="date" className="form-control form-control-lg" placeholder="Date of publish" 
               defaultValue={data.published_date}
               onChange={(e)=>setPdate(e.target.value)}
@@ -145,14 +163,13 @@ navigate('/books/manage');
 
               </div>
               <div className="col-md-9 pe-5">
-
+              <span className="text-danger m-2">{error.file_path}</span>
                 <input className="form-control form-control-lg" id="formFileLg" type="file" 
                 defaultValue={data.file_path}
                 onChange={(e)=>setFile(e.target.files[0])}
                 /> <br />
                <img style={{width:50}} src={"http://localhost:8000/"+data.file_path}/>
-                <div className="small text-muted mt-2">Upload  cover page of the book in jpg/png/jpeg format. Max file
-                  size 50 MB</div>
+                <div className="small text-muted mt-2">Upload  cover page of the book in jpg/jpeg format.</div>
 
               </div>
             </div>
