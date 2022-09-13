@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Showbooks from '../books/Showbooks';
+import Show from './Mybooks';
 
 export default function Profile()
 {
@@ -9,37 +9,17 @@ export default function Profile()
 
   const [data,setData]=useState(user);
   console.log(data);
-    // function fetchuser()
-    // {
-    //   fetch("http://127.0.0.1:8000/api/users/get/")
-    //   .then((res) =>
-    //   {
-    //     res.json();
-    //     console.log(res.json())
-    //   }
-        
-    //       )
-    
-    //   .then((data) => {
-    //     console.log(data);
-    //       setData(data);
-    //   },)
-    // }
-    // useEffect( ()=>{
-    //    fetchuser();
-    // },[])
-  
-
     return(
         <div className=" container-break-point ">
         <div className="row">
         <div className="col-9">
-          {<Showbooks/> }
-        </div> 
-      <div className="col-3 animated fadeIn " >
+          {<Show/> }
+        </div>
+       
+      <div className="col-3 animated fadeIn  " >
       
       <div className="container d-flex justify-content-center align-items-center">
-        <div className="card py-4 "  style={{marginTop:'200px',padding:'30px'}}>
+        <div className="card py-4 "  style={{marginTop:'60px',padding:'30px'}}>
 
            <div className="d-flex   h-100 justify-content-center align-items-center">
              <div className="round-image">

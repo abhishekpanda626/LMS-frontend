@@ -17,6 +17,8 @@ import Managebooks from './components/books/Managebooks';
 import Addbooks from './components/books/Addbooks';
 import UpdateStudent from './components/teacher/UpdateStudent';
 import UpdateBooks from './components/books/UpdateBooks';
+import Assign from './components/books/AssignBooks';
+import Show from './components/student/Mybooks';
 
 function App() {
   return (
@@ -34,10 +36,12 @@ function App() {
       <Route path='/books/update' element={<UpdateBooks/>} />
       <Route path='/manage/students' element={<Manage/>} />
       <Route path='/manage/students/update' element={<UpdateStudent/>} />
+      <Route path='/books/assign' element={<Assign/>} />    
       </Route>
 
       <Route element={<Student/>}>
       <Route path='/books/show' element={<Showbooks/>} />
+      <Route path='/mybooks' element={<Show/>} />
       <Route path='/student/profile' element={<Sprofile/>} />
       </Route>
 

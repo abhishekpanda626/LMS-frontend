@@ -23,7 +23,7 @@ export default function Header() {
                student ?
               <>
                  <Nav.Link href='/'>Home</Nav.Link>
-
+                 <Nav.Link href='/books/show'>Books</Nav.Link>
               </>
               : null
             }
@@ -62,8 +62,8 @@ export default function Header() {
 <Navbar.Text className='text-white-50'>
               Signed in as &nbsp;
               </Navbar.Text>
-<NavDropdown title={student && student.name ||teacher && teacher.name} id="basic-nav-dropdown">             
-              <NavDropdown.Item href="/student/profile">Profile</NavDropdown.Item>
+<NavDropdown title={student && student.name+'(student)'  || teacher && teacher.name +'(teacher)'} id="basic-nav-dropdown">             
+              <NavDropdown.Item href="/student/profile">Dashboard</NavDropdown.Item>
               <NavDropdown.Item onClick={logout}>
                 Logout
               </NavDropdown.Item>

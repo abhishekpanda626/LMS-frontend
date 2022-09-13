@@ -14,7 +14,6 @@ export default function UpdateStudent()
   const [data,setData]=useState([]);
   const [books,setBook]=useState([]);
   const [error,setError]=useState([]);
-  const [bookid,setBookid]=useState('');
   var sid=localStorage.getItem('sid');
 
   function fetchuser()
@@ -31,7 +30,7 @@ export default function UpdateStudent()
         setContact(data.contact_no);
         setPassword(data.password);
         setFile(data.file_path);
-        setBookid(data.book_id);
+       
     },)
   }
   function fetchbook()
@@ -59,14 +58,14 @@ export default function UpdateStudent()
 async function updateHandler(e,id)
 {
   e.preventDefault();
-  console.log("selected id:",bookid)
+
   const formdata= new FormData();
 formdata.append('name',name);
 formdata.append('contact_no',contact);
 formdata.append('email',email);
 formdata.append('password',password);
 formdata.append('image',file);
-formdata.append('book_id',bookid);
+
 
 console.log(formdata);
 let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PUT",{
@@ -146,15 +145,7 @@ let result=await fetch("http://localhost:8000/api/users/update/"+id+"?_method=PU
             onChange={(e)=>setPassword(e.target.value)}
           />
         </div>
-        <label >Choose a book:</label>
-
-              <select onChange={(e)=>setBookid(e.target.value)} >
-                <option value=""></option>
-                { books.map(books=>(
-                 <option key={books.id} defaultChecked value={books.id} >{books.id}-{books.title}</option>
-                 ))}
-               </select>
-            
+       
                 <div className="mb-3">
                   <label>Upload Image</label>
                   <input required className="form-control form-control-sm" id="formFileSm" type="file"

@@ -23,9 +23,7 @@ export default function Studentreg()
     setContacterr("The contact no field is required");
   }
   else if(!RegExp.test(contact)) {
-     // console.log("contact error",result);
-      setContacterr("Invalid Contact no.");
-     
+      setContacterr("Invalid Contact no.");    
     }
    
   }

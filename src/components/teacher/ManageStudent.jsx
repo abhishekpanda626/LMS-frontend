@@ -59,7 +59,7 @@ const addHandler=()=>{
       <th scope="col">Name</th>
       <th scope="col">Contact No</th>
       <th scope="col">Email</th>
-      <th scope="col">Book assigned</th>
+      
       <th scope="col" >Action</th>
     </tr>
   </thead>
@@ -72,12 +72,6 @@ const addHandler=()=>{
       {user.name}</th>
       <td>{user.contact_no}</td>
       <td>{user.email}</td>
-      <td>
-      <img  src={`http://localhost:8000/${user.book.file_path}`}  alt=" not found" height={50} width={60}/>
-      &emsp;
-        {user.book.title}
-        </td>
-      
       <td>
       <button className='btn btn-info' onClick={(e)=>updateHandler(user.id)}>Update</button> &emsp;
         <button className='btn btn-danger' onClick={(e)=>deleteHandler(user.id)}>Remove</button>

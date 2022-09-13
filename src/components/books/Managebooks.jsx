@@ -44,6 +44,10 @@ fetchdata();
 const addHandler=()=>{
     navigate('/books/add');
 }
+const assignHandler=(id)=>{
+  localStorage.setItem('bid',id);
+  navigate('/books/assign');
+}
 const editHandler=(id)=>{
 localStorage.setItem('bid',id);
 navigate('/books/update');
@@ -69,7 +73,12 @@ function showQuery()
           <td>{book.author}</td>
           <td>{book.genre}</td>
           <td>{book.published_date}</td>
-          <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
+          <td>
+          <button className="btn btn-primary" onClick={(e)=>assignHandler(book.id)} >Assign</button> 
+          </td>
+           
+          <td>
+             <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
           <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
          
         </tr>
@@ -110,7 +119,7 @@ function showQuery()
       <th scope="col">Author Name</th>
       <th scope="col" >Genre</th>
       <th scope="col">Published Date</th>
-      <th scope="col" colSpan={2} >Action</th>
+      <th scope="col" colSpan={3} >Action</th>
     </tr>
   </thead>
 
@@ -127,6 +136,9 @@ function showQuery()
         <td>{book.author}</td>
         <td>{book.genre}</td>
         <td>{book.published_date}</td>
+        <td>
+          <button className="btn btn-primary" onClick={(e)=>assignHandler(book.id)} >Assign</button> 
+          </td>
         <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
         <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
        
