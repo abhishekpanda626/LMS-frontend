@@ -59,6 +59,7 @@ const addHandler=()=>{
       <th scope="col">Name</th>
       <th scope="col">Contact No</th>
       <th scope="col">Email</th>
+      <th scope="col">Book name</th>
       <th scope="col" >Action</th>
     </tr>
   </thead>
@@ -71,6 +72,8 @@ const addHandler=()=>{
       {user.name}</th>
       <td>{user.contact_no}</td>
       <td>{user.email}</td>
+      <td>{user.book.title}</td>
+      
       <td>
       <button className='btn btn-info' onClick={(e)=>updateHandler(user.id)}>Update</button> &emsp;
         <button className='btn btn-danger' onClick={(e)=>deleteHandler(user.id)}>Remove</button>
