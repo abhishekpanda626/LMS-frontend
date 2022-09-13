@@ -30,10 +30,10 @@ export default function Profile()
            <div className="text-center">
 
              <h4 className="mt-3">{data.name}</h4>
-             <span>{data.email}</span>
+             <span className='text-muted' >{data.email}</span>
 
              <div className="px-5">
-               <p className="content">{data.contact_no}</p>
+               <p className="content text-muted">{data.contact_no}</p>
 
                
              </div>
