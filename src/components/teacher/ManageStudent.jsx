@@ -15,7 +15,7 @@ function fetchuser()
   .then((data) => {
       //console.log(data);
       setData(data);
-     // setPosts(data)
+     console.log(data.book.title);
   },)
 }
 useEffect( ()=>{
@@ -59,7 +59,7 @@ const addHandler=()=>{
       <th scope="col">Name</th>
       <th scope="col">Contact No</th>
       <th scope="col">Email</th>
-      <th scope="col">Book name</th>
+      <th scope="col">Book assigned</th>
       <th scope="col" >Action</th>
     </tr>
   </thead>
@@ -72,7 +72,11 @@ const addHandler=()=>{
       {user.name}</th>
       <td>{user.contact_no}</td>
       <td>{user.email}</td>
-      <td>{user.book.title}</td>
+      <td>
+      <img  src={`http://localhost:8000/${user.book.file_path}`}  alt=" not found" height={50} width={60}/>
+      &emsp;
+        {user.book.title}
+        </td>
       
       <td>
       <button className='btn btn-info' onClick={(e)=>updateHandler(user.id)}>Update</button> &emsp;

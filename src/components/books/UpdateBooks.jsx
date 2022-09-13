@@ -53,7 +53,7 @@ let result=await fetch("http://localhost:8000/api/books/update/"+bid+"?_method=P
     Swal.fire({
       position: 'top-end',
       icon: 'success',
-      title: 'New book added!!! ',
+      title: ' Book is updated!!! ',
       showConfirmButton: false,
       timer: 1500
     })

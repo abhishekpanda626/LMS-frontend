@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 //import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 //import './teacher.css';
 export default function Managebooks(){
+
 const [data,setData]=useState([]);
 const navigate=useNavigate();
 const[ query, setQuery]=useState('');
@@ -23,17 +24,17 @@ async function search(key)
 {
   console.log("key",key)
   let result= await fetch("http://localhost:8000/api/books/search/"+key)
-  let final=await result.json();
- // let err=await result.json();
-  console.warn(final);
-  console.warn(result);
-  setQuery(final);
+ result=await result.json();
+
+  
+  setQuery(result);
 
 
 }
 useEffect( ()=>{
    fetchdata();
    search();
+
 },[])
 async function deleteHandler(e,id){
 e.preventDefault();
@@ -46,6 +47,43 @@ const addHandler=()=>{
 const editHandler=(id)=>{
 localStorage.setItem('bid',id);
 navigate('/books/update');
+}
+function showQuery()
+{
+
+  return(
+    <>
+    <div className="container">
+<table className="table table-hover m-md-5">
+
+    {query?
+  
+      query && query.map(book=>(
+        <tbody key={book.id}>
+        <tr>
+          <th scope="row"  >
+            <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80} height={80}/>
+            
+            </th>
+          <th>{book.title}</th>
+          <td>{book.author}</td>
+          <td>{book.genre}</td>
+          <td>{book.published_date}</td>
+          <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
+          <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
+         
+        </tr>
+        
+      </tbody>
+      ))
+       :
+      
+     <></>
+    
+      }
+      </table> </div>
+      </>
+  )
 }
  return (
         <>
@@ -61,8 +99,8 @@ navigate('/books/update');
       Add new book
     </button>
   </div>
-
     </div>
+    {showQuery()}
 <div className="container">
 <table className="table table-hover m-md-5">
   <thead>
@@ -75,46 +113,28 @@ navigate('/books/update');
       <th scope="col" colSpan={2} >Action</th>
     </tr>
   </thead>
-  {query?
-  query && query.map(book=>(
-    <tbody key={book.id}>
-    <tr>
-      <th scope="row"  >
-        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80} height={80}/>
-        
-        </th>
-      <th>{book.title}</th>
-      <td>{book.author}</td>
-      <td>{book.genre}</td>
-      <td>{book.published_date}</td>
-      <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
-      <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
-     
-    </tr>
-    
-  </tbody>
-  )) :
- data && data.map(book=>(
-    <tbody key={book.id}>
-    <tr>
-      <th scope="row"  >
-        <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80} height={80}/>
-        
-        </th>
-      <th>{book.title}</th>
-      <td>{book.author}</td>
-      <td>{book.genre}</td>
-      <td>{book.published_date}</td>
-      <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
-      <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
-     
-    </tr>
-    
-  </tbody>
-  ))
 
+  
+  {
+    data && data.map(book=>(
+      <tbody key={book.id} id="hide">
+      <tr>
+        <th scope="row"  >
+          <img  src={`http://localhost:8000/${book.file_path}`} alt="image not found" width={80} height={80}/>
+          
+          </th>
+        <th>{book.title}</th>
+        <td>{book.author}</td>
+        <td>{book.genre}</td>
+        <td>{book.published_date}</td>
+        <td> <button className="btn btn-info" onClick={(e)=>editHandler(book.id)} >Edit</button> </td>
+        <td> <button className="btn btn-danger" onClick={(e)=>deleteHandler(e,book.id)}>Delete</button> </td>
+       
+      </tr>
+      
+    </tbody>
+    ))
   }
-   
   
 </table>
 </div>
